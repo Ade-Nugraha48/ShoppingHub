@@ -10,6 +10,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+
 import '../../core/utils/app_helpers.dart';
 import '../../models/item_model.dart';
 import '../../models/note_model.dart';
@@ -193,7 +194,8 @@ class _DetailScreenState extends State<DetailScreen> {
               icon: const Icon(Icons.share_rounded),
               tooltip: 'Bagikan / Salin Info',
               onPressed: () {
-                final textToShare = '''
+                final textToShare =
+                    '''
 ${widget.item.name}
 Status: ${widget.item.status}
 Spesies: ${widget.item.species}
@@ -252,7 +254,10 @@ Asal: ${widget.item.origin}
                     )
                   : Container(
                       color: Colors.grey.shade200,
-                      child: const Icon(Icons.image_not_supported_rounded, size: 64),
+                      child: const Icon(
+                        Icons.image_not_supported_rounded,
+                        size: 64,
+                      ),
                     ),
             ),
           ),
@@ -278,12 +283,17 @@ Asal: ${widget.item.origin}
                     ),
                     const SizedBox(width: 8),
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 6,
+                      ),
                       decoration: BoxDecoration(
-                        color: _getStatusColor(widget.item.status).withAlpha(30),
+                        color: _getStatusColor(widget.item.status)
+                            .withAlpha(30),
                         borderRadius: BorderRadius.circular(10),
                         border: Border.all(
-                          color: _getStatusColor(widget.item.status).withAlpha(80),
+                          color: _getStatusColor(widget.item.status)
+                              .withAlpha(80),
                         ),
                       ),
                       child: Row(
@@ -342,8 +352,8 @@ Asal: ${widget.item.origin}
                         // Belanja: Icons.category_rounded (Kategori Produk)
                         // Buku:    Icons.person_rounded / Icons.history_edu_rounded (Penulis)
                         _buildDetailRow(
-                          icon: Icons.fingerprint_rounded,
-                          label: 'Spesies',
+                          icon: Icons.history_edu_rounded,
+                          label: 'Brand',
                           value: widget.item.species.isNotEmpty
                               ? widget.item.species
                               : 'Tidak diketahui',
@@ -355,10 +365,10 @@ Asal: ${widget.item.origin}
                         // Belanja: Icons.attach_money_rounded / Icons.price_change_rounded (Harga)
                         // Buku:    Icons.calendar_month_rounded (Tahun Terbit)
                         _buildDetailRow(
-                          icon: Icons.wc_rounded,
-                          label: 'Gender',
+                          icon: Icons.attach_money_rounded,
+                          label: 'Harga',
                           value: widget.item.gender.isNotEmpty
-                              ? widget.item.gender
+                              ? '${widget.item.gender} USD'
                               : 'Tidak diketahui',
                         ),
                         const Divider(height: 20),
@@ -368,36 +378,13 @@ Asal: ${widget.item.origin}
                         // Belanja: Icons.star_rounded / Icons.inventory_2_rounded (Stok / Rating)
                         // Buku:    Icons.pages_rounded / Icons.import_contacts_rounded (Jumlah Halaman)
                         _buildDetailRow(
-                          icon: Icons.public_rounded,
-                          label: 'Asal (Origin)',
+                          icon: Icons.discount_rounded,
+                          label: 'Diskon',
                           value: widget.item.origin.isNotEmpty
-                              ? widget.item.origin
+                              ? '${widget.item.origin}%'
                               : 'Tidak diketahui',
                         ),
                         const Divider(height: 20),
-
-                        // [GANTI ICON DISINI - BARIS 4]
-                        // Makanan: Icons.location_on_rounded / Icons.place_rounded (Alamat / Kota Resto)
-                        // Belanja: Icons.local_shipping_rounded (Pengiriman / Toko)
-                        // Buku:    Icons.business_rounded (Penerbit)
-                        _buildDetailRow(
-                          icon: Icons.location_on_rounded,
-                          label: 'Lokasi Terakhir',
-                          value: widget.item.location.isNotEmpty
-                              ? widget.item.location
-                              : 'Tidak diketahui',
-                        ),
-                        const Divider(height: 20),
-
-                        // [GANTI ICON DISINI - BARIS 5]
-                        // Makanan: Icons.restaurant_menu_rounded (Daftar Menu Tersedia)
-                        // Belanja: Icons.sell_rounded (Tag / Promo)
-                        // Film:    Icons.tv_rounded / Icons.theaters_rounded (Episode / Durasi)
-                        _buildDetailRow(
-                          icon: Icons.tv_rounded,
-                          label: 'Jumlah Episode',
-                          value: '${widget.item.episode.length} Episode',
-                        ),
                       ],
                     ),
                   ),
@@ -497,9 +484,7 @@ Asal: ${widget.item.origin}
         const SizedBox(width: 12),
         Text(
           label,
-          style: theme.textTheme.bodyMedium?.copyWith(
-            color: Colors.grey,
-          ),
+          style: theme.textTheme.bodyMedium?.copyWith(color: Colors.grey),
         ),
         const SizedBox(width: 16),
         Expanded(
@@ -551,10 +536,7 @@ Asal: ${widget.item.origin}
               ],
             ),
             const SizedBox(height: 8),
-            Text(
-              note.content,
-              style: theme.textTheme.bodyMedium,
-            ),
+            Text(note.content, style: theme.textTheme.bodyMedium),
             const SizedBox(height: 12),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -562,12 +544,18 @@ Asal: ${widget.item.origin}
                 Expanded(
                   child: Text(
                     'Tersimpan di Hive (${note.createdAt.day}/${note.createdAt.month}/${note.createdAt.year})',
-                    style: theme.textTheme.bodySmall?.copyWith(color: Colors.grey),
+                    style: theme.textTheme.bodySmall?.copyWith(
+                      color: Colors.grey,
+                    ),
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),
                 IconButton(
-                  icon: const Icon(Icons.delete_outline_rounded, color: Colors.redAccent, size: 20),
+                  icon: const Icon(
+                    Icons.delete_outline_rounded,
+                    color: Colors.redAccent,
+                    size: 20,
+                  ),
                   tooltip: 'Hapus Catatan',
                   onPressed: _deleteNoteFromHive,
                 ),
@@ -605,7 +593,10 @@ Asal: ${widget.item.origin}
             // Rating Slider
             Row(
               children: [
-                const Text('Rating: ', style: TextStyle(fontWeight: FontWeight.bold)),
+                const Text(
+                  'Rating: ',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
                 Expanded(
                   child: Slider(
                     value: _rating,

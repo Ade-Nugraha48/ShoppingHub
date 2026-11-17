@@ -18,7 +18,8 @@ class SecondaryModel {
   final String episode;
   final List<String> characters;
   final String url;
-  final String image; // [BARU] Menampung URL gambar jika API kedua memiliki gambar
+  final String
+  image; // [BARU] Menampung URL gambar jika API kedua memiliki gambar
   final String description; // [BARU] Menampung deskripsi/keterangan jika API kedua memiliki penjelasan
 
   // ---------------------------------------------------------------------------
@@ -69,7 +70,7 @@ class SecondaryModel {
           'episode',
           'category',
           'desc',
-          'description'
+          'description',
         ]) {
           if (value.containsKey(key) && value[key] != null) {
             return parseSafe(value[key]);
@@ -85,7 +86,10 @@ class SecondaryModel {
       }
       if (value is List) {
         if (value.isEmpty) return '';
-        return value.map((e) => parseSafe(e)).where((s) => s.isNotEmpty).join(', ');
+        return value
+            .map((e) => parseSafe(e))
+            .where((s) => s.isNotEmpty)
+            .join(', ');
       }
       return value.toString();
     }
@@ -104,7 +108,7 @@ class SecondaryModel {
           'large',
           'medium',
           'original',
-          'link'
+          'link',
         ]) {
           if (value.containsKey(key) && value[key] != null) {
             return parseSafe(value[key]);
@@ -127,9 +131,13 @@ class SecondaryModel {
       // [GANTI DISINI] Sesuaikan key JSON dengan response API sekunder
       id: parseId(json['id']),
       name: parseSafe(json['name'] ?? json['title']),
-      airDate: parseSafe(json['air_date'] ?? json['date'] ?? json['release_date']),
+      airDate: parseSafe(
+        json['air_date'] ?? json['date'] ?? json['release_date'],
+      ),
       episode: parseSafe(json['episode'] ?? json['category'] ?? json['type']),
-      characters: parseCharacters(json['characters'] ?? json['cast'] ?? json['items']),
+      characters: parseCharacters(
+        json['characters'] ?? json['cast'] ?? json['items'],
+      ),
       url: parseSafe(json['url']),
       image: parseSafeImage(
         json['image'] ??
@@ -212,6 +220,6 @@ class SecondaryModel {
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'SecondaryModel(id: $id, name: $name, episode: $episode)';
+  String toString() =>
+      'SecondaryModel(id: $id, name: $name, episode: $episode)';
 }
-

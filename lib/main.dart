@@ -55,7 +55,7 @@ class MyApp extends StatelessWidget {
       child: Consumer<ThemeProvider>(
         builder: (context, themeProvider, child) {
           return MaterialApp(
-            title: 'Universal Explorer - Rick & Morty Responsi',
+            title: 'Shopping Hub',
             debugShowCheckedModeBanner: false,
             theme: AppTheme.getLightTheme(themeProvider.primaryColor),
             darkTheme: AppTheme.getDarkTheme(themeProvider.primaryColor),

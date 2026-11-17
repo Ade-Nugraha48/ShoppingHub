@@ -24,9 +24,9 @@ class ItemCard extends StatelessWidget {
   // Helper warna badge status karakter
   Color _getStatusColor(String status) {
     switch (status.toLowerCase()) {
-      case 'alive':
+      case 'beauty':
         return const Color(0xFF2E7D32); // Hijau
-      case 'dead':
+      case 'fragrances':
         return const Color(0xFFD32F2F); // Merah
       default:
         return Colors.grey;

@@ -9,6 +9,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import '../providers/favorite_provider.dart';
 import 'favorite/favorite_screen.dart';
 import 'home/home_screen.dart';
@@ -33,7 +34,7 @@ class _MainNavScreenState extends State<MainNavScreen> {
   final List<Widget> _pages = const [
     HomeScreen(),
     FavoriteScreen(),
-    SecondaryScreen(),
+    // SecondaryScreen(),
     ProfileScreen(),
   ];
 
@@ -42,10 +43,7 @@ class _MainNavScreenState extends State<MainNavScreen> {
     final favoriteProvider = context.watch<FavoriteProvider>();
 
     return Scaffold(
-      body: IndexedStack(
-        index: _currentIndex,
-        children: _pages,
-      ),
+      body: IndexedStack(index: _currentIndex, children: _pages),
       bottomNavigationBar: NavigationBar(
         selectedIndex: _currentIndex,
         onDestinationSelected: (index) {
@@ -75,14 +73,14 @@ class _MainNavScreenState extends State<MainNavScreen> {
             icon: Badge(
               isLabelVisible: favoriteProvider.count > 0,
               label: Text('${favoriteProvider.count}'),
-              child: const Icon(Icons.favorite_outline),
+              child: const Icon(Icons.shopping_cart_rounded),
             ),
             selectedIcon: Badge(
               isLabelVisible: favoriteProvider.count > 0,
               label: Text('${favoriteProvider.count}'),
-              child: const Icon(Icons.favorite_rounded),
+              child: const Icon(Icons.shopping_cart_rounded),
             ),
-            label: 'Favorites',
+            label: 'Wishlist',
           ),
 
           // TAB 3: SEKUNDER / ENDPOINT KEDUA
@@ -91,11 +89,11 @@ class _MainNavScreenState extends State<MainNavScreen> {
           // Contoh Tema Belanja: Icons.category_outlined / Icons.category_rounded (label: 'Kategori')
           // Contoh Tema TV/Film: Icons.tv_outlined / Icons.tv_rounded (label: 'Episodes')
           // Contoh Tema Buku:    Icons.person_pin_outlined / Icons.person_pin_rounded (label: 'Penulis')
-          const NavigationDestination(
-            icon: Icon(Icons.tv_outlined),
-            selectedIcon: Icon(Icons.tv_rounded),
-            label: 'Episodes',
-          ),
+          // const NavigationDestination(
+          //   icon: Icon(Icons.tv_outlined),
+          //   selectedIcon: Icon(Icons.tv_rounded),
+          //   label: 'Episodes',
+          // ),
 
           // TAB 4: PROFIL
           // Umumnya tetap Icons.person_outline / Icons.person_rounded untuk semua tema.

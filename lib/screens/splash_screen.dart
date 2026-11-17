@@ -8,6 +8,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import '../providers/auth_provider.dart';
 import 'auth/login_screen.dart';
 import 'main_nav_screen.dart';
@@ -68,7 +69,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 shape: BoxShape.circle,
               ),
               child: Icon(
-                Icons.explore_rounded,
+                Icons.storefront_rounded,
                 size: 72,
                 color: theme.colorScheme.primary,
               ),
@@ -77,7 +78,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
             // Judul Aplikasi
             Text(
-              'Universal Explorer',
+              'Shopping Hub',
               style: theme.textTheme.headlineMedium?.copyWith(
                 fontWeight: FontWeight.bold,
                 color: theme.colorScheme.primary,
@@ -87,10 +88,8 @@ class _SplashScreenState extends State<SplashScreen> {
 
             // Sub-judul / Info Template
             Text(
-              'Rick & Morty Template Responsi',
-              style: theme.textTheme.bodyMedium?.copyWith(
-                color: Colors.grey,
-              ),
+              'Tempat Berbelanjamu',
+              style: theme.textTheme.bodyMedium?.copyWith(color: Colors.grey),
             ),
             const SizedBox(height: 36),
 
@@ -106,4 +105,3 @@ class _SplashScreenState extends State<SplashScreen> {
     );
   }
 }
-

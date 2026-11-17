@@ -24,14 +24,15 @@ class ItemModel {
   // Tips: Gunakan int untuk ID, String untuk teks, double untuk angka desimal/harga.
   // ---------------------------------------------------------------------------
   final int id;
-  final String name;      // Bisa digunakan untuk 'title', 'judul', atau 'nama'
-  final String status;    // Bisa diganti 'category', 'status', atau 'genre'
-  final String species;   // Bisa diganti 'brand', 'penulis', atau 'author'
-  final String gender;    // Bisa diganti 'price', 'rating', atau field lain
-  final String image;     // URL gambar (thumbnail, poster, avatar)
-  final String origin;    // Deskripsi asal atau detail tambahan
-  final String location;  // Lokasi atau informasi pendukung lainnya
-  final String description; // [BARU] Deskripsi panjang (description, overview, synopsis)
+  final String name; // Bisa digunakan untuk 'title', 'judul', atau 'nama'
+  final String status; // Bisa diganti 'category', 'status', atau 'genre'
+  final String species; // Bisa diganti 'brand', 'penulis', atau 'author'
+  final String gender; // Bisa diganti 'price', 'rating', atau field lain
+  final String image; // URL gambar (thumbnail, poster, avatar)
+  final String origin; // Deskripsi asal atau detail tambahan
+  final String location; // Lokasi atau informasi pendukung lainnya
+  final String
+  description; // [BARU] Deskripsi panjang (description, overview, synopsis)
   final List<String> episode; // List array jika ada (misal tags, images, dll)
 
   // ---------------------------------------------------------------------------
@@ -76,7 +77,8 @@ class ItemModel {
       if (value is String) {
         final parsed = int.tryParse(value);
         if (parsed != null) return parsed;
-        return value.hashCode.abs(); // UUID string diubah jadi ID integer unik positif
+        return value.hashCode
+            .abs(); // UUID string diubah jadi ID integer unik positif
       }
       if (value is num) return value.toInt();
       return 0;
@@ -98,7 +100,7 @@ class ItemModel {
           'city',
           'address',
           'desc',
-          'description'
+          'description',
         ]) {
           if (value.containsKey(key) && value[key] != null) {
             return parseSafe(value[key]);
@@ -116,7 +118,10 @@ class ItemModel {
       if (value is List) {
         if (value.isEmpty) return '';
         // Gabungkan list jadi satu string koma (misal: "Action, Adventure")
-        return value.map((e) => parseSafe(e)).where((s) => s.isNotEmpty).join(', ');
+        return value
+            .map((e) => parseSafe(e))
+            .where((s) => s.isNotEmpty)
+            .join(', ');
       }
       return value.toString();
     }
@@ -134,7 +139,7 @@ class ItemModel {
           'large',
           'medium',
           'original',
-          'link'
+          'link',
         ]) {
           if (value.containsKey(key) && value[key] != null) {
             return parseSafe(value[key]);
@@ -171,18 +176,20 @@ class ItemModel {
       // [COCOKKAN KEY DI SINI] Nama di dalam kurung siku ['...'] harus sama persis dengan JSON API
       id: parseId(json['id']),
       name: parseSafe(json['name'] ?? json['title']),
-      status: parseSafe(json['status'] ?? json['category'] ?? json['city'] ?? 'unknown'),
+      status: parseSafe(
+        json['status'] ?? json['category'] ?? json['city'] ?? 'unknown',
+      ),
       species: parseSafe(json['species'] ?? json['brand'] ?? json['cuisine']),
-      gender: parseSafe(json['gender'] ?? json['price'] ?? json['rating']),
+      gender: parseSafe(json['gender'] ?? json['price'] ?? json['']),
       image: parseSafeImage(
         json['image'] ??
             json['thumbnail'] ??
             json['pictureId'] ??
             json['strMealThumb'],
       ),
-      origin: parseSafe(json['origin']),
-      location: parseSafe(json['location']).isNotEmpty
-          ? parseSafe(json['location'])
+      origin: parseSafe(json['discountPercentage']),
+      location: parseSafe(json['rating']).isNotEmpty
+          ? parseSafe(json['rewiews'])
           : parseSafe(json['city'] ?? json['address']),
       // -----------------------------------------------------------------------
       // [LOGIKA DESKRIPSI OTOMATIS]:
@@ -194,9 +201,9 @@ class ItemModel {
       description: apiDescription.isNotEmpty
           ? apiDescription
           : (json['species'] != null
-              ? '${parseSafe(json['name']).isNotEmpty ? parseSafe(json['name']) : 'Karakter ini'} adalah entitas dengan status ${parseSafe(json['status']).isNotEmpty ? parseSafe(json['status']) : 'unknown'} dan spesies ${parseSafe(json['species']).isNotEmpty ? parseSafe(json['species']) : 'unknown'}, yang tercatat berasal dari ${parseSafe(json['origin']).isNotEmpty ? parseSafe(json['origin']) : 'tempat yang tidak diketahui'}.'
-              : ''),
-      episode: parseEpisodeList(json['episode']),
+                ? '${parseSafe(json['name']).isNotEmpty ? parseSafe(json['name']) : 'Karakter ini'} adalah entitas dengan status ${parseSafe(json['status']).isNotEmpty ? parseSafe(json['status']) : 'unknown'} dan spesies ${parseSafe(json['species']).isNotEmpty ? parseSafe(json['species']) : 'unknown'}, yang tercatat berasal dari ${parseSafe(json['origin']).isNotEmpty ? parseSafe(json['origin']) : 'tempat yang tidak diketahui'}.'
+                : ''),
+      episode: parseEpisodeList(json['rewiews']),
     );
   }
 
@@ -294,4 +301,3 @@ class ItemModel {
   @override
   String toString() => 'ItemModel(id: $id, name: $name, status: $status)';
 }
-

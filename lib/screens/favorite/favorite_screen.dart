@@ -11,6 +11,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import '../../core/utils/app_helpers.dart';
 import '../../models/item_model.dart';
 import '../../providers/favorite_provider.dart';
@@ -72,7 +73,10 @@ class FavoriteScreen extends StatelessWidget {
               child: Center(
                 child: Badge(
                   label: Text('${favorites.length}'),
-                  child: const Icon(Icons.favorite_rounded, color: Colors.redAccent),
+                  child: const Icon(
+                    Icons.favorite_rounded,
+                    color: Colors.redAccent,
+                  ),
                 ),
               ),
             ),
@@ -82,8 +86,7 @@ class FavoriteScreen extends StatelessWidget {
           ? const EmptyStateWidget(
               icon: Icons.favorite_border_rounded,
               title: 'Belum Ada Favorit',
-              message:
-                  'Tandai karakter favorit Anda dengan menekan ikon hati di halaman utama.',
+              message: 'Tandai karakter favorit Anda dengan menekan ikon hati di halaman utama.',
             )
           : ListView.builder(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
@@ -114,7 +117,11 @@ class FavoriteScreen extends StatelessWidget {
                           ),
                         ),
                         SizedBox(width: 8),
-                        Icon(Icons.delete_sweep_rounded, color: Colors.white, size: 28),
+                        Icon(
+                          Icons.delete_sweep_rounded,
+                          color: Colors.white,
+                          size: 28,
+                        ),
                       ],
                     ),
                   ),
@@ -135,7 +142,10 @@ class FavoriteScreen extends StatelessWidget {
                         textColor: Colors.yellowAccent,
                         onPressed: () {
                           // Batalkan penghapusan & sisipkan kembali
-                          favoriteProvider.insertFavorite(deletedIndex, deletedItem);
+                          favoriteProvider.insertFavorite(
+                            deletedIndex,
+                            deletedItem,
+                          );
                         },
                       ),
                     );
@@ -167,7 +177,9 @@ class FavoriteScreen extends StatelessWidget {
                                 width: 56,
                                 height: 56,
                                 color: Colors.grey.shade200,
-                                child: const Icon(Icons.image_not_supported_rounded),
+                                child: const Icon(
+                                  Icons.image_not_supported_rounded,
+                                ),
                               ),
                       ),
                       title: Text(
@@ -181,7 +193,7 @@ class FavoriteScreen extends StatelessWidget {
                           Text('${item.species} • ${item.gender}'),
                           const SizedBox(height: 4),
                           Text(
-                            'Status: ${item.status}',
+                            'Kategori: ${item.status}',
                             style: TextStyle(
                               fontSize: 12,
                               color: item.isAlive

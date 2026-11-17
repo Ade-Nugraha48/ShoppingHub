@@ -9,8 +9,10 @@
 // ==============================================================================
 
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import '../../core/constants/api_constants.dart';
 import '../../providers/item_provider.dart';
 import '../../widgets/item_card.dart';
@@ -21,9 +23,12 @@ class HomeScreen extends StatefulWidget {
   // ---------------------------------------------------------------------------
   // [CONFIG FITUR KEJUTAN (BISA DINONAKTIFKAN KAPAN SAJA DENGAN UBAH JADI FALSE)]
   // ---------------------------------------------------------------------------
-  static const bool enableViewModeToggle = true; // [FITUR 6] Tombol Switch Grid / List
-  static const bool enableScrollToTop = true;    // [FITUR 7] Tombol Mengambang (FAB) Scroll ke Atas
-  static const bool enableSummaryBar = true;     // [FITUR 10] Banner Ringkasan Jumlah & Filter
+  static const bool enableViewModeToggle =
+      true; // [FITUR 6] Tombol Switch Grid / List
+  static const bool enableScrollToTop =
+      true; // [FITUR 7] Tombol Mengambang (FAB) Scroll ke Atas
+  static const bool enableSummaryBar =
+      true; // [FITUR 10] Banner Ringkasan Jumlah & Filter
 
   const HomeScreen({super.key});
 
@@ -37,8 +42,8 @@ class _HomeScreenState extends State<HomeScreen> {
   Timer? _debounce;
 
   // State untuk Fitur Kejutan
-  bool _isGridView = true;       // true: Grid 2 kolom, false: List 1 kolom
-  bool _showBackToTop = false;   // Otomatis true saat scroll ke bawah > 300px
+  bool _isGridView = true; // true: Grid 2 kolom, false: List 1 kolom
+  bool _showBackToTop = false; // Otomatis true saat scroll ke bawah > 300px
 
   @override
   void initState() {
@@ -92,7 +97,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Rick & Morty Explorer'),
+        title: const Text('Halaman Utama'),
         actions: [
           // -------------------------------------------------------------------
           // TOMBOL SORTING (A-Z / Z-A / DEFAULT) - FITUR KEJUTAN 4
@@ -125,6 +130,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 ),
               ),
+
+        
               const PopupMenuItem(
                 value: SortOption.nameDesc,
                 child: Row(
@@ -197,7 +204,7 @@ class _HomeScreenState extends State<HomeScreen> {
               controller: _searchController,
               onChanged: _onSearchChanged,
               decoration: InputDecoration(
-                hintText: 'Cari nama karakter (misal: Rick)...',
+                hintText: 'Cari nama produk',
                 prefixIcon: const Icon(Icons.search_rounded),
                 suffixIcon: _searchController.text.isNotEmpty
                     ? IconButton(
@@ -225,26 +232,44 @@ class _HomeScreenState extends State<HomeScreen> {
                 _buildFilterChip(
                   label: 'All',
                   statusValue: ApiConstants.statusAll,
-                  isSelected: itemProvider.selectedStatus == ApiConstants.statusAll,
-                  onSelected: () => itemProvider.setStatusFilter(ApiConstants.statusAll),
+                  isSelected:
+                      itemProvider.selectedStatus == ApiConstants.statusAll,
+                  onSelected: () =>
+                      itemProvider.setStatusFilter(ApiConstants.statusAll),
                 ),
                 _buildFilterChip(
-                  label: 'Alive',
+                  label: 'Beauty',
                   statusValue: ApiConstants.statusAlive,
-                  isSelected: itemProvider.selectedStatus == ApiConstants.statusAlive,
-                  onSelected: () => itemProvider.setStatusFilter(ApiConstants.statusAlive),
+                  isSelected:
+                      itemProvider.selectedStatus == ApiConstants.statusAlive,
+                  onSelected: () =>
+                      itemProvider.setStatusFilter(ApiConstants.statusAlive),
                 ),
                 _buildFilterChip(
-                  label: 'Dead',
+                  label: 'Fragrance',
                   statusValue: ApiConstants.statusDead,
-                  isSelected: itemProvider.selectedStatus == ApiConstants.statusDead,
-                  onSelected: () => itemProvider.setStatusFilter(ApiConstants.statusDead),
+                  isSelected:
+                      itemProvider.selectedStatus == ApiConstants.statusDead,
+                  onSelected: () =>
+                      itemProvider.setStatusFilter(ApiConstants.statusDead),
                 ),
                 _buildFilterChip(
-                  label: 'Unknown',
+                  label: 'Furniture',
                   statusValue: ApiConstants.statusUnknown,
-                  isSelected: itemProvider.selectedStatus == ApiConstants.statusUnknown,
-                  onSelected: () => itemProvider.setStatusFilter(ApiConstants.statusUnknown),
+                  isSelected:
+                      itemProvider.selectedStatus == ApiConstants.statusUnknown,
+                  onSelected: () =>
+                      itemProvider.setStatusFilter(ApiConstants.statusUnknown),
+                ),
+                _buildFilterChip(
+                  label: 'Groceries',
+                  statusValue: ApiConstants.statusGroceries,
+                  isSelected:
+                      itemProvider.selectedStatus ==
+                      ApiConstants.statusGroceries,
+                  onSelected: () => itemProvider.setStatusFilter(
+                    ApiConstants.statusGroceries,
+                  ),
                 ),
               ],
             ),
@@ -264,14 +289,18 @@ class _HomeScreenState extends State<HomeScreen> {
                   Text(
                     'Menampilkan ${itemProvider.items.length} item',
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: Colors.grey[600],
-                          fontWeight: FontWeight.w600,
-                        ),
+                      color: Colors.grey[600],
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8,
+                      vertical: 2,
+                    ),
                     decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.primary.withAlpha(25),
+                      color: Theme.of(context).colorScheme.primary
+                          .withAlpha(25),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Text(
@@ -291,9 +320,7 @@ class _HomeScreenState extends State<HomeScreen> {
           // -------------------------------------------------------------------
           // 3. DAFTAR ITEM (LOADING, ERROR, EMPTY, ATAU GRID DATA)
           // -------------------------------------------------------------------
-          Expanded(
-            child: _buildContent(itemProvider),
-          ),
+          Expanded(child: _buildContent(itemProvider)),
         ],
       ),
     );
@@ -326,7 +353,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _buildContent(ItemProvider provider) {
     // 1. Kondisi Loading Pertama Kali
     if (provider.isLoading) {
-      return const LoadingStateWidget(message: 'Mengambil data karakter...');
+      return const LoadingStateWidget(message: 'Mengambil data produk...');
     }
 
     // 2. Kondisi Error
@@ -413,15 +440,16 @@ class _HomeScreenState extends State<HomeScreen> {
                               width: 50,
                               height: 50,
                               fit: BoxFit.cover,
-                              errorBuilder: (context, error, stackTrace) => Container(
-                                width: 50,
-                                height: 50,
-                                color: Colors.grey.shade200,
-                                child: const Icon(
-                                  Icons.image_not_supported_rounded,
-                                  size: 24,
-                                ),
-                              ),
+                              errorBuilder: (context, error, stackTrace) =>
+                                  Container(
+                                    width: 50,
+                                    height: 50,
+                                    color: Colors.grey.shade200,
+                                    child: const Icon(
+                                      Icons.image_not_supported_rounded,
+                                      size: 24,
+                                    ),
+                                  ),
                             )
                           : Container(
                               width: 50,

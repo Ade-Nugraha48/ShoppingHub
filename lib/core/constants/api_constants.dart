@@ -23,7 +23,7 @@ class ApiConstants {
   // - Toko FakeStore          : 'https://fakestoreapi.com'
   // - Berita / News API       : 'https://newsapi.org/v2'
   // ---------------------------------------------------------------------------
-  static const String baseUrl = 'https://rickandmortyapi.com/api';
+  static const String baseUrl = 'https://dummyjson.com';
 
   // ---------------------------------------------------------------------------
   // [GANTI DISINI 2] ENDPOINT UTAMA (LIST & DETAIL)
@@ -37,8 +37,9 @@ class ApiConstants {
   // - Soal Anime / Manga      : '/anime'
   // - Soal Resep Makanan      : '/recipes'
   // ---------------------------------------------------------------------------
-  static const String charactersEndpoint = '/character'; // Endpoint Item Utama
-  static const String episodesEndpoint = '/episode';     // Endpoint Item Sekunder (Tab 3)
+  static const String charactersEndpoint = '/products'; // Endpoint Item Utama
+  static const String episodesEndpoint =
+      '/products/category-list'; // Endpoint Item Sekunder (Tab 3)
 
   // ---------------------------------------------------------------------------
   // [GANTI DISINI 3] QUERY PARAMETER PENCARIAN & PAGINATION
@@ -50,7 +51,8 @@ class ApiConstants {
   // - Umumnya API  : ?search=... atau ?query=...
   // ---------------------------------------------------------------------------
   static const String paramPage = 'page';
-  static const String paramSearch = 'name'; // Ganti jadi 'q' atau 'search' jika soal memintanya
+  static const String paramSearch =
+      'category-list'; // Ganti jadi 'q' atau 'search' jika soal memintanya
   static const String paramStatus = 'status';
 
   // ---------------------------------------------------------------------------
@@ -61,24 +63,20 @@ class ApiConstants {
   // 2. Buat konstanta string sesuai nilai yang diterima server API.
   // 3. Masukkan ke dalam list `statusFilterList` agar muncul tombolnya di UI.
   //
-  // CONTOH JIKA SOAL PRODUK (KATEGORI):
-  // static const String statusAll = '';
-  // static const String statusBeauty = 'beauty';
-  // static const String statusFragrances = 'fragrances';
-  // static const String statusFurniture = 'furniture';
-  // static const List<String> statusFilterList = ['All', 'Beauty', 'Fragrances', 'Furniture'];
   // ---------------------------------------------------------------------------
-  static const String statusAll = '';         // Kosong = Tampilkan semua data
-  static const String statusAlive = 'alive';
-  static const String statusDead = 'dead';
-  static const String statusUnknown = 'unknown';
+  static const String statusAll = ''; // Kosong = Tampilkan semua data
+  static const String statusAlive = 'beauty';
+  static const String statusDead = 'fragrances';
+  static const String statusUnknown = 'furniture';
+  static const String statusGroceries = 'groceries';
 
   /// Daftar tombol filter yang langsung muncul di bagian atas HomeScreen
   static const List<String> statusFilterList = [
     'All',
-    'Alive',
-    'Dead',
-    'Unknown',
+    'Beauty',
+    'Fragrances',
+    'Furniture',
+    'Groceries',
   ];
 
   // ---------------------------------------------------------------------------
@@ -113,13 +111,14 @@ class ApiConstants {
     }
 
     // Tambahkan filter status jika ada dan bukan 'All' / string kosong
-    if (status != null && status.trim().isNotEmpty && status.toLowerCase() != 'all') {
+    if (status != null &&
+        status.trim().isNotEmpty &&
+        status.toLowerCase() != 'all') {
       queryParams[paramStatus] = status.trim().toLowerCase();
     }
 
-    return Uri.parse('$baseUrl$charactersEndpoint').replace(
-      queryParameters: queryParams.isEmpty ? null : queryParams,
-    );
+    return Uri.parse('$baseUrl$charactersEndpoint')
+        .replace(queryParameters: queryParams.isEmpty ? null : queryParams);
   }
 
   /// Membentuk Uri untuk detail Karakter berdasarkan ID
@@ -139,9 +138,8 @@ class ApiConstants {
       queryParams[paramSearch] = search.trim();
     }
 
-    return Uri.parse('$baseUrl$episodesEndpoint').replace(
-      queryParameters: queryParams.isEmpty ? null : queryParams,
-    );
+    return Uri.parse('$baseUrl$episodesEndpoint')
+        .replace(queryParameters: queryParams.isEmpty ? null : queryParams);
   }
 
   /// Membentuk Uri untuk detail Episode berdasarkan ID
@@ -149,4 +147,3 @@ class ApiConstants {
     return Uri.parse('$baseUrl$episodesEndpoint/$id');
   }
 }
-
